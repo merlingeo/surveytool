@@ -1,0 +1,48 @@
+<div class="main-container">
+    <div class="header">
+        <mat-toolbar color="primary">
+            <span>e-Survey Shangri-La</span>
+            <span class="example-spacer"></span>
+            <span class="material-icons">
+                account_circle
+                </span>
+            <span class="username">{{username}}</span>
+        </mat-toolbar>
+
+    </div>
+    <div class="body-container">
+        <div class="desc">
+            <p>this is a survey.Answer the question one at atime no option to change the answers once selected. submit
+                the survey once completed thank you for the cooperation </p>
+        </div>
+        <div class="survey-container">
+            <mat-card>
+                <mat-stepper orientation="vertical" [linear]="false">
+                    <form [formGroup]="questionForm">
+                        <mat-step *ngFor="let quest of questions ; let i = index">
+                           
+                            <ng-template matStepLabel>{{quest.Text}}
+                                <div class="stepper-header-overlay" (click)="onExpansion(quest.id)"></div>
+
+                            </ng-template>
+                            <mat-radio-group class="options-radio-group"
+                                (change)="setAnswers(i,quest.id,$event.value)">
+                                <mat-radio-button class="quest-option" *ngFor="let option of options"
+                                    [value]="option.id">
+                                    {{option.Text}}
+                                </mat-radio-button>
+                            </mat-radio-group>
+                            
+                        </mat-step>
+                    </form>
+                </mat-stepper>
+                {{this.questionForm.value | json}}
+                {{this.questionForm.valid | json}}
+                <div class="submit-btn">
+                    <button mat-raised-button color="primary" type="submit" class="button" [disabled]="!questionForm.valid" (click)="onSubmitSurvey()">Save & Complete Survey</button>
+                </div>
+            </mat-card>
+        </div>
+    </div>
+
+</div>

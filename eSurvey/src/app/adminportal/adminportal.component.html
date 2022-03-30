@@ -1,0 +1,58 @@
+<div class="main-container">
+    <div class="header">
+        <mat-toolbar color="accent">
+            <span>e-Survey Shangri-La</span>
+            <span class="example-spacer"></span>
+            <span class="material-icons">
+                account_circle
+            </span>
+            <span class="username">{{username}}</span>
+            <button mat-raised-button>Logout</button>
+        </mat-toolbar>
+    </div>
+    <div class="padding-box">
+        <app-surveycharts [surveyResults]="results"></app-surveycharts>
+        <div>{{results}}</div>
+    </div>
+    <div class="add-quest">
+        <form>  
+            <mat-form-field class="form-element">
+                <mat-label> Question</mat-label>
+                <input matInput placeholder="Question" formControlName="Question">
+               
+              </mat-form-field>
+              <mat-form-field class="form-element">
+                <input matInput placeholder="" formControlName="fullname">
+               
+              </mat-form-field>
+        </form>
+    </div>
+    <div class="ques-list padding-box">
+        <mat-list>
+            <div *ngFor="let item of questions; index as i">
+                <!-- <span>{{i+1}}. </span> -->
+                <span>{{item.id}}. </span>
+                <mat-list-item>{{item.Text}}</mat-list-item>
+                <mat-radio-group class="options-radio-group">
+                    <mat-radio-button class="quest-option"  color="accent"*ngFor="let option of questOption" [value]="option.id">
+                        {{option.Text}}
+                    </mat-radio-button>
+                </mat-radio-group>
+                <div class="btn-grp">
+                    <button mat-raised-button color="accent" type="submit" class="button marg-box" (click)="editQuestion(item.id)">Edit</button>
+                    <button mat-raised-button color="accent" type="submit" class="button marg-box">Delete</button>
+                </div>
+                <mat-divider class="padding-box"></mat-divider>
+            </div>
+        </mat-list>
+    </div>
+    <div class="form-container">
+        <!-- <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+            <mat-form-field class="form-element">
+                <input matInput placeholder="Emailaddress" formControlName="email">
+                </mat-form-field>
+
+        </form> -->
+        {{this.questionForm.value | json}}
+    </div>
+</div>

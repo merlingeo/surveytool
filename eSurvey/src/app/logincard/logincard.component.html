@@ -1,0 +1,111 @@
+<div class="main-container">
+    <mat-card>
+        <mat-card-title class="text-center">e-Survey Shangri-La</mat-card-title>
+        <div class="login-category ">
+
+            <mat-accordion>
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            {{!isRegister? "Resident Login" :"Resident Registeration"}}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="login-component" *ngIf="!isRegister">
+                        <form class="login-container" [formGroup]="loginForm" (ngSubmit)="onSubmit()" >
+                            <div>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput type="email" formControlName="email">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input matInput type="password" formControlName="password">
+                                </mat-form-field>
+                                <button mat-raised-button color="primary"  class="submitbtn" [disabled]="!loginForm.valid">Resident Login</button>
+                                <p class="register-wrapper">Dont Have an account? <span><button mat-raised-button class="reg-btn submitbtn" (click)="routeRegister()">Register</button></span> </p>
+                            </div>
+                        </form>
+                        
+                    </div>
+                    <div class="register-main-container" *ngIf="isRegister">
+                        <form  [formGroup]="registerForm" (ngSubmit)="onRegisterationSubmit(registerForm.value)">
+                            <mat-form-field class="form-element">
+                                <input matInput placeholder="Email" type="email" formControlName="newemail">
+                                <mat-error *ngIf="!registerForm.controls['newemail'].valid && registerForm.controls['newemail'].touched &&  f.newemail.errors.email">Enter a Valid Email</mat-error>
+                              </mat-form-field>
+                              <mat-form-field class="form-element">
+                                <input matInput placeholder="Full Name" formControlName="fullname">
+                                <mat-error *ngIf="!registerForm.controls['fullname'].valid && registerForm.controls['fullname'].touched">
+                                   Valid full name is required
+                                  </mat-error>
+                              </mat-form-field>
+                              <mat-form-field class="form-element">
+                                <input matInput placeholder="Date of Birth" type="date" formControlName="dob">
+                                <mat-error *ngIf="!registerForm.controls['dob'].valid && registerForm.controls['dob'].touched">
+                                   Valid Date of birth is required
+                                  </mat-error>
+                              </mat-form-field>
+                              <mat-form-field class="form-element">
+                                <input matInput placeholder="Address" formControlName="address">
+                                <mat-error *ngIf="!registerForm.controls['address'].valid && registerForm.controls['address'].touched">
+                                    Valid address is required
+                                   </mat-error>
+                              </mat-form-field>
+                              <mat-form-field class="form-element">
+                                <input matInput placeholder="Password" formControlName="newpassword" type="password">
+                                <mat-error *ngIf="!registerForm.controls['newpassword'].valid && registerForm.controls['newpassword'].touched && f.newpassword.hasError('minlength')">
+                                    Valid password is required
+                                   </mat-error>
+                              </mat-form-field>
+                              <mat-form-field class="form-element">
+                                <input matInput placeholder="SNI Number" formControlName="snino">
+                                <mat-error *ngIf="!registerForm.controls['snino'].valid && registerForm.controls['snino'].touched">
+                                    Scan or enter valid SNI Number
+                                   </mat-error>
+                                   <!-- <mat-error *ngIf="!registerForm.controls['snino'].valid &&registerForm.controls['snino'].touched && f.newemail.errors.alreadyInUse ">
+                                     This SNI Number Already exist
+                                   </mat-error> -->
+                                   <div *ngIf="registerForm.controls['snino'].valid">{{disableScanner()}}</div>
+                              </mat-form-field>
+                              <div class="scanner">
+                                <div style="padding-bottom: 10px;">---- OR ----</div>
+                                <button mat-raised-button *ngIf="!scannerEnabled" (click)="scanQRcode()" >Scan SNI</button>
+                                <zxing-scanner *ngIf="scannerEnabled" #scanner (scanSuccess)="scanSuccessHandler($event)">
+                                </zxing-scanner>                              
+                            </div>
+                              
+                              <button mat-raised-button  class="submitbtn" color="accent" type="submit" [disabled]="!registerForm.valid" >Register</button>
+                              <!-- (click)="routeLogin()" -->
+                        </form>
+                        
+                    </div>
+                </mat-expansion-panel>
+                <mat-expansion-panel hideToggle (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title class="text-center">
+                            Council Login
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="login-component">
+                        <form class="login-container" [formGroup]="loginForm" (ngSubmit)="onAdminSubmit()">
+                            <div>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput type="email" formControlName="email">
+                                </mat-form-field>
+                                <mat-form-field appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input matInput type="password" formControlName="password">
+                                </mat-form-field>
+                                <button mat-raised-button color="accent" class="submitbtn">Council Login</button>
+                            </div>
+                        </form>
+                    </div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+        </div>
+    </mat-card>
+
+</div>
+
